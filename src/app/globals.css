@@ -38,3 +38,15 @@ a {
   flex-direction: column;
   justify-content: space-between;
 }
+
+@media (max-width: 968px) {
+  .container {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 20px;
+  }
+}

@@ -12,6 +12,7 @@
 .items {
   display: flex;
   gap: 50px;
+  flex-wrap: wrap;
 }
 
 .item {
@@ -43,4 +44,43 @@
 
 .item:hover .title {
   color: #53c28b;
+}
+
+@media (max-width: 968px) {
+  .mainTitle {
+    font-size: 60px;
+  }
+
+  .items {
+    gap: 30px;
+    justify-content: center;
+  }
+
+  .item {
+    width: 280px;
+    height: 350px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .mainTitle {
+    font-size: 40px;
+  }
+
+  .items {
+    gap: 20px;
+  }
+
+  .item {
+    width: 100%;
+    height: 300px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
 }

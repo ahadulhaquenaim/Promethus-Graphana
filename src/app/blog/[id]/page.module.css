@@ -3,6 +3,7 @@
 
 .top {
   display: flex;
+  gap: 30px;
 }
 
 .info {
@@ -48,4 +49,48 @@
   font-weight: 300;
   color: #999;
   text-align: justify;
+}
+
+@media (max-width: 968px) {
+  .top {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .imageContainer {
+    height: 250px;
+    width: 100%;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .desc {
+    font-size: 16px;
+  }
+
+  .content {
+    margin-top: 30px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .imageContainer {
+    height: 200px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .desc {
+    font-size: 14px;
+  }
+
+  .content {
+    margin-top: 20px;
+    font-size: 16px;
+  }
 }

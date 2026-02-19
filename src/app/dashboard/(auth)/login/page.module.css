@@ -68,3 +68,34 @@
 .google:hover {
   background-color: rgba(228, 97, 50, 0.803);
 }
+
+@media (max-width: 640px) {
+  .container {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .form {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .input {
+    padding: 15px;
+    font-size: 16px;
+  }
+
+  .button {
+    width: 100%;
+    padding: 15px;
+  }
+}

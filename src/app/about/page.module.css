@@ -39,3 +39,47 @@
   font-weight: 300;
   text-align: justify;
 }
+
+@media (max-width: 968px) {
+  .imgContainer {
+    height: 250px;
+  }
+
+  .textContainer {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .item {
+    margin-top: 30px;
+    gap: 20px;
+  }
+
+  .desc {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .imgContainer {
+    height: 200px;
+  }
+
+  .imgText {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+
+  .textContainer {
+    gap: 30px;
+  }
+
+  .item {
+    margin-top: 20px;
+    gap: 15px;
+  }
+
+  .desc {
+    font-size: 14px;
+  }
+}
