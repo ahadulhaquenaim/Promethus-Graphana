@@ -38,6 +38,22 @@
   gap: 20px;
 }
 
+.formCard {
+  flex: 1;
+  background: rgba(83, 194, 139, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(83, 194, 139, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(83, 194, 139, 0.15);
+}
+
 .input,
 .textArea {
   padding: 10px;
@@ -65,6 +81,10 @@
     gap: 50px;
   }
 
+  .formCard {
+    padding: 30px;
+  }
+
   .post {
     flex-direction: column;
     align-items: flex-start;
@@ -85,6 +105,11 @@
 @media (max-width: 640px) {
   .container {
     gap: 30px;
+  }
+
+  .formCard {
+    padding: 25px;
+    border-radius: 15px;
   }
 
   .post {
