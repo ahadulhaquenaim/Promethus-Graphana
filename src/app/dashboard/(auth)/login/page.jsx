@@ -38,10 +38,11 @@ const Login = ({ url }) => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>{success ? success : "Welcome Back"}</h1>
-      <h2 className={styles.subtitle}>Please sign in to see the dashboard.</h2>
+      <div className={styles.card}>
+        <h1 className={styles.title}>{success ? success : "Welcome Back"}</h1>
+        <h2 className={styles.subtitle}>Please sign in to see the dashboard.</h2>
 
-      <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form}>
         <input
           type="text"
           placeholder="Email"
@@ -77,6 +78,7 @@ const Login = ({ url }) => {
       >
         Login with Github
       </button> */}
+      </div>
     </div>
   );
 };

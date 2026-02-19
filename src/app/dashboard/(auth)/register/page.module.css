@@ -1,9 +1,60 @@
 .container{
   display: flex;
-  flex-direction: column;
-  gap: 20px;
   align-items: center;
   justify-content: center;
+  min-height: 60vh;
+  padding: 40px 20px;
+}
+
+.card {
+  background: rgba(83, 194, 139, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(83, 194, 139, 0.2);
+  border-radius: 20px;
+  padding: 50px 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(83, 194, 139, 0.15);
+}
+
+.title {
+  color: #bbb;
+  margin: 0;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #999;
+  text-align: center;
+  margin: 0;
+}
+
+.or {
+  color: #999;
+  font-size: 14px;
+}
+
+.link {
+  text-decoration: none;
+  color: #53c28b;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #3da575;
+  text-decoration: underline;
 }
 
 .form{
@@ -37,6 +88,12 @@
 @media (max-width: 640px) {
   .container {
     padding: 20px;
+    min-height: 50vh;
+  }
+
+  .card {
+    padding: 35px 25px;
+    border-radius: 15px;
   }
 
   .form {
