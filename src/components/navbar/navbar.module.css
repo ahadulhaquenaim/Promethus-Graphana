@@ -1,26 +1,281 @@
+/* ===== Navbar Container ===== */
 .container {
-  height: 100px;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 10px;
+  position: relative;
 }
 
+/* ===== Logo Styles ===== */
 .logo {
-  font-weight: bold;
-  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 24px;
+  transition: transform 0.3s ease;
 }
 
+.logo:hover {
+  transform: scale(1.02);
+}
+
+.logoIcon {
+  font-size: 28px;
+  background: linear-gradient(135deg, #53c28b, #194c33);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.logoText {
+  background: linear-gradient(135deg, #194c33, #53c28b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Links Container ===== */
 .links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
 }
 
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(83, 194, 139, 0.05);
+  border-radius: 50px;
+  border: 1px solid rgba(83, 194, 139, 0.1);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 10px;
+}
+
+/* ===== Individual Link Styles ===== */
+.link {
+  position: relative;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border-radius: 25px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.link:hover {
+  background: rgba(83, 194, 139, 0.15);
+  color: #53c28b;
+}
+
+.link.active {
+  background: linear-gradient(135deg, #53c28b, #3da575);
+  color: white;
+  box-shadow: 0 4px 15px rgba(83, 194, 139, 0.3);
+}
+
+.linkUnderline {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #53c28b, transparent);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.link:hover .linkUnderline {
+  width: 60%;
+}
+
+.link.active .linkUnderline {
+  display: none;
+}
+
+/* ===== Logout Button ===== */
 .logout {
-  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
   border: none;
-  background-color: #53c28b;
+  background: linear-gradient(135deg, #53c28b, #3da575);
   color: white;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(83, 194, 139, 0.25);
+}
+
+.logout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(83, 194, 139, 0.35);
+  background: linear-gradient(135deg, #5dd69a, #53c28b);
+}
+
+.logout:active {
+  transform: translateY(0);
+}
+
+.logoutIcon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ===== Mobile Menu Toggle ===== */
+.menuToggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid rgba(83, 194, 139, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+.menuToggle:hover {
+  border-color: #53c28b;
+  background: rgba(83, 194, 139, 0.1);
+}
+
+.hamburger {
+  position: relative;
+  width: 20px;
+  height: 2px;
+  background: #53c28b;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background: #53c28b;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger::before {
+  top: -6px;
+}
+
+.hamburger::after {
+  top: 6px;
+}
+
+.hamburger.open {
+  background: transparent;
+}
+
+.hamburger.open::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.hamburger.open::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* ===== Responsive Styles ===== */
+@media (max-width: 968px) {
+  .menuToggle {
+    display: flex;
+  }
+
+  .links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 100px 30px 30px;
+    background: inherit;
+    backdrop-filter: blur(20px);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    gap: 30px;
+  }
+
+  .links.showMenu {
+    right: 0;
+  }
+
+  .navLinks {
+    flex-direction: column;
+    width: 100%;
+    padding: 15px;
+    gap: 5px;
+    border-radius: 20px;
+  }
+
+  .link {
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+    border-radius: 12px;
+  }
+
+  .actions {
+    flex-direction: column;
+    width: 100%;
+    margin-left: 0;
+    gap: 20px;
+  }
+
+  .logout {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 20px;
+  }
+
+  .logoIcon {
+    font-size: 24px;
+  }
+
+  .links {
+    width: 100%;
+    right: -100%;
+  }
+
+  .links.showMenu {
+    right: 0;
+  }
 }
