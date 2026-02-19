@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connect from "@/utils/db";
 import Post from "@/models/Post";
+import { revalidatePath } from "next/cache";
 
 export const GET = async (request) => {
   const url = new URL(request.url);
@@ -27,6 +28,9 @@ export const POST = async (request) => {
     await connect();
 
     await newPost.save();
+
+    // Revalidate the blog page to show new posts
+    revalidatePath('/blog');
 
     return new NextResponse("Post has been created", { status: 201 });
   } catch (err) {

@@ -6,6 +6,7 @@ import Image from "next/image";
 async function getData() {
   const res = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/posts`, {
     cache: "no-store",
+    next: { revalidate: 0 }
   });
 
   if (!res.ok) {
@@ -14,6 +15,9 @@ async function getData() {
 
   return res.json();
 }
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const Blog = async () => {
   const data = await getData();
