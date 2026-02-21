@@ -1,0 +1,559 @@
+{
+  "id": null,
+  "uid": "nextjs-metrics",
+  "title": "Next.js Application Metrics",
+  "tags": ["nextjs", "nodejs", "mongodb"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "5s",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+      {
+        "id": 1,
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+        "type": "graph",
+        "title": "HTTP Request Rate",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total[5m])",
+            "legendFormat": "{{method}} {{route}} - {{status}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "reqps",
+            "label": "Requests/sec"
+          },
+          {
+            "format": "short"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+        "type": "graph",
+        "title": "HTTP Request Duration (p95)",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "{{method}} {{route}} - p95",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "s",
+            "label": "Duration"
+          },
+          {
+            "format": "short"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+        "type": "stat",
+        "title": "Total Requests",
+        "targets": [
+          {
+            "expr": "sum(http_requests_total)",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        }
+      },
+      {
+        "id": 4,
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+        "type": "graph",
+        "title": "Response Status Codes",
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total[5m])) by (status)",
+            "legendFormat": "Status {{status}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "reqps",
+            "label": "Requests/sec"
+          },
+          {
+            "format": "short"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "gridPos": { "h": 8, "w": 24, "x": 0, "y": 16 },
+        "type": "table",
+        "title": "Request Summary by Route",
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total[5m])) by (route, method)",
+            "format": "table",
+            "instant": true,
+            "refId": "A"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "gridPos": { "h": 6, "w": 6, "x": 0, "y": 24 },
+        "type": "stat",
+        "title": "MongoDB Connection Status",
+        "targets": [
+          {
+            "expr": "mongodb_connection_status",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {
+                "type": "value",
+                "options": {
+                  "0": {
+                    "text": "Disconnected",
+                    "color": "red"
+                  },
+                  "1": {
+                    "text": "Connected",
+                    "color": "green"
+                  }
+                }
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "red"
+                },
+                {
+                  "value": 1,
+                  "color": "green"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 7,
+        "gridPos": { "h": 6, "w": 6, "x": 6, "y": 24 },
+        "type": "stat",
+        "title": "Total Users",
+        "targets": [
+          {
+            "expr": "mongodb_users_total",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "blue"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 8,
+        "gridPos": { "h": 6, "w": 6, "x": 12, "y": 24 },
+        "type": "stat",
+        "title": "Total Posts",
+        "targets": [
+          {
+            "expr": "mongodb_posts_total",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "purple"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 9,
+        "gridPos": { "h": 6, "w": 6, "x": 18, "y": 24 },
+        "type": "stat",
+        "title": "App Status",
+        "targets": [
+          {
+            "expr": "app_up",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {
+                "type": "value",
+                "options": {
+                  "0": {
+                    "text": "Down",
+                    "color": "red"
+                  },
+                  "1": {
+                    "text": "Up",
+                    "color": "green"
+                  }
+                }
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "red"
+                },
+                {
+                  "value": 1,
+                  "color": "green"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 10,
+        "gridPos": { "h": 6, "w": 12, "x": 0, "y": 30 },
+        "type": "stat",
+        "title": "Users Created Today",
+        "targets": [
+          {
+            "expr": "mongodb_users_created_today",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "green"
+                },
+                {
+                  "value": 10,
+                  "color": "yellow"
+                },
+                {
+                  "value": 50,
+                  "color": "red"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 11,
+        "gridPos": { "h": 6, "w": 12, "x": 12, "y": 30 },
+        "type": "stat",
+        "title": "Posts Created Today",
+        "targets": [
+          {
+            "expr": "mongodb_posts_created_today",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "green"
+                },
+                {
+                  "value": 20,
+                  "color": "yellow"
+                },
+                {
+                  "value": 100,
+                  "color": "red"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 12,
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 36 },
+        "type": "graph",
+        "title": "MongoDB Users Over Time",
+        "targets": [
+          {
+            "expr": "mongodb_users_total",
+            "legendFormat": "Total Users",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Users"
+          },
+          {
+            "format": "short"
+          }
+        ],
+        "lines": true,
+        "fill": 1,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        }
+      },
+      {
+        "id": 13,
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 36 },
+        "type": "graph",
+        "title": "MongoDB Posts Over Time",
+        "targets": [
+          {
+            "expr": "mongodb_posts_total",
+            "legendFormat": "Total Posts",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Posts"
+          },
+          {
+            "format": "short"
+          }
+        ],
+        "lines": true,
+        "fill": 1,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        }
+      },
+      {
+        "id": 14,
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 44 },
+        "type": "graph",
+        "title": "MongoDB Query Duration (p95)",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(mongodb_query_duration_seconds_bucket[5m]))",
+            "legendFormat": "{{operation}} on {{collection}} - p95",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "s",
+            "label": "Duration"
+          },
+          {
+            "format": "short"
+          }
+        ],
+        "lines": true,
+        "fill": 1,
+        "linewidth": 2
+      },
+      {
+        "id": 15,
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 44 },
+        "type": "graph",
+        "title": "MongoDB Operations Rate",
+        "targets": [
+          {
+            "expr": "rate(mongodb_operations_total[5m])",
+            "legendFormat": "{{operation}} on {{collection}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "ops",
+            "label": "Operations/sec"
+          },
+          {
+            "format": "short"
+          }
+        ],
+        "lines": true,
+        "fill": 1,
+        "linewidth": 2
+      },
+      {
+        "id": 16,
+        "gridPos": { "h": 8, "w": 24, "x": 0, "y": 52 },
+        "type": "table",
+        "title": "MongoDB Operations Summary",
+        "targets": [
+          {
+            "expr": "sum(rate(mongodb_operations_total[5m])) by (operation, collection)",
+            "format": "table",
+            "instant": true,
+            "refId": "A"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true
+              },
+              "indexByName": {
+                "operation": 0,
+                "collection": 1,
+                "Value": 2
+              },
+              "renameByName": {
+                "Value": "Ops/sec"
+              }
+            }
+          }
+        ]
+        }
+    ],
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": ["5s", "10s", "30s", "1m", "5m"]
+  },
+  "templating": {
+    "list": []
+  },
+  "annotations": {
+    "list": []
+  }
+}
