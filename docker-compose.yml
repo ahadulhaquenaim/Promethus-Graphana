@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - MONGO=mongodb://mongo:27017/nexttutorial
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=dev-secret-key-only
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - mongo
+    networks:
+      - news-network
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:6
+    container_name: mongo-nexttutorial
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: nexttutorial
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - news-network
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+
+networks:
+  news-network:
+    driver: bridge

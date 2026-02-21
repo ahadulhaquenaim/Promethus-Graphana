@@ -4,16 +4,24 @@ import Link from "next/link";
 import Image from "next/image";
 
 async function getData() {
-  const res = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/posts`, {
-    cache: "no-store",
-    next: { revalidate: 0 }
-  });
+  try {
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/posts`, {
+      cache: "no-store",
+      next: { revalidate: 0 }
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    if (!res.ok) {
+      console.error(`API Error: ${res.status} - ${res.statusText}`);
+      throw new Error(`Failed to fetch posts: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data || [];
+  } catch (error) {
+    console.error("getData error:", error);
+    throw error;
   }
-
-  return res.json();
 }
 
 export const dynamic = 'force-dynamic';
