@@ -67,6 +67,22 @@ const dbConnectionStatus = new promClient.Gauge({
   registers: [register],
 });
 
+// MongoDB Performance Metrics
+const dbQueryDuration = new promClient.Histogram({
+  name: 'mongodb_query_duration_seconds',
+  help: 'Duration of MongoDB queries in seconds',
+  labelNames: ['operation', 'collection'],
+  buckets: [0.01, 0.05, 0.1, 0.5, 1, 2, 5],
+  registers: [register],
+});
+
+const dbOperationsTotal = new promClient.Counter({
+  name: 'mongodb_operations_total',
+  help: 'Total number of MongoDB operations',
+  labelNames: ['operation', 'collection'],
+  registers: [register],
+});
+
 export { 
   register, 
   routeHits, 
@@ -76,5 +92,7 @@ export {
   totalPosts,
   usersCreatedToday,
   postsCreatedToday,
-  dbConnectionStatus
+  dbConnectionStatus,
+  dbQueryDuration,
+  dbOperationsTotal
 };

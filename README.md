@@ -18,6 +18,39 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Monitoring & Observability
+
+This application includes comprehensive monitoring with Prometheus and Grafana:
+
+### Features
+- **HTTP Request Tracking**: All routes (pages and APIs) are automatically tracked
+- **MongoDB Monitoring**: Real-time database metrics and query performance
+- **Performance Metrics**: Request duration, error rates, and operation timing
+- **Business Metrics**: User and post counts, daily growth tracking
+
+### Access
+- **Application**: http://localhost:3000
+- **Metrics Endpoint**: http://localhost:3000/api/metrics
+- **Prometheus**: http://localhost:9090
+- **Grafana Dashboard**: http://localhost:3001 (admin/admin)
+
+### Documentation
+- [Monitoring Guide](MONITORING_GUIDE.md) - HTTP metrics and Grafana setup
+- [MongoDB Monitoring](MONGODB_MONITORING.md) - Database-specific monitoring
+- [Grafana Setup](GRAFANA_SETUP.md) - Dashboard configuration
+
+### Quick Start with Docker
+```bash
+# Start all services (app, Prometheus, Grafana)
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

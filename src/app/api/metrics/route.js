@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { register, totalUsers, totalPosts, usersCreatedToday, postsCreatedToday, dbConnectionStatus } from '../metrics';
+import { trackDbOperation } from '../metricsHelper';
 import connect from '@/utils/db';
 import User from '@/models/User';
 import Post from '@/models/Post';
@@ -13,9 +14,14 @@ async function updateMongoDBMetrics() {
     // Update connection status
     dbConnectionStatus.set(mongoose.connection.readyState === 1 ? 1 : 0);
     
-    // Get total counts
-    const userCount = await User.countDocuments();
-    const postCount = await Post.countDocuments();
+    // Get total counts with tracking
+    const userCount = await trackDbOperation('countDocuments', 'users', async () => {
+      return await User.countDocuments();
+    });
+    
+    const postCount = await trackDbOperation('countDocuments', 'posts', async () => {
+      return await Post.countDocuments();
+    });
     
     totalUsers.set(userCount);
     totalPosts.set(postCount);
@@ -24,12 +30,16 @@ async function updateMongoDBMetrics() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    const usersToday = await User.countDocuments({
-      createdAt: { $gte: today }
+    const usersToday = await trackDbOperation('countDocuments', 'users', async () => {
+      return await User.countDocuments({
+        createdAt: { $gte: today }
+      });
     });
     
-    const postsToday = await Post.countDocuments({
-      createdAt: { $gte: today }
+    const postsToday = await trackDbOperation('countDocuments', 'posts', async () => {
+      return await Post.countDocuments({
+        createdAt: { $gte: today }
+      });
     });
     
     usersCreatedToday.set(usersToday);
