@@ -36,4 +36,45 @@ const requestErrors = new promClient.Counter({
   registers: [register],
 });
 
-export { register, routeHits, requestDuration, requestErrors };
+// MongoDB Business Metrics
+const totalUsers = new promClient.Gauge({
+  name: 'mongodb_users_total',
+  help: 'Total number of users in the database',
+  registers: [register],
+});
+
+const totalPosts = new promClient.Gauge({
+  name: 'mongodb_posts_total',
+  help: 'Total number of blog posts in the database',
+  registers: [register],
+});
+
+const usersCreatedToday = new promClient.Gauge({
+  name: 'mongodb_users_created_today',
+  help: 'Number of users created today',
+  registers: [register],
+});
+
+const postsCreatedToday = new promClient.Gauge({
+  name: 'mongodb_posts_created_today',
+  help: 'Number of posts created today',
+  registers: [register],
+});
+
+const dbConnectionStatus = new promClient.Gauge({
+  name: 'mongodb_connection_status',
+  help: 'MongoDB connection status (1 = connected, 0 = disconnected)',
+  registers: [register],
+});
+
+export { 
+  register, 
+  routeHits, 
+  requestDuration, 
+  requestErrors,
+  totalUsers,
+  totalPosts,
+  usersCreatedToday,
+  postsCreatedToday,
+  dbConnectionStatus
+};
